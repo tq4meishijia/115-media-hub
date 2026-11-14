@@ -15,6 +15,10 @@ function withTabModuleImportQuery(path) {
 }
 
 export const TAB_MODULE_IMPORT_PATHS = Object.freeze({
+    overview: withTabModuleImportQuery('/static/js/modules/tabs/overview.js'),
+    calendar: withTabModuleImportQuery('/static/js/modules/tabs/calendar.js'),
+    tools: withTabModuleImportQuery('/static/js/modules/tabs/tools.js'),
+    accounts: withTabModuleImportQuery('/static/js/modules/tabs/accounts.js'),
     resource: withTabModuleImportQuery('/static/js/modules/tabs/resource.js'),
     recommendation: withTabModuleImportQuery('/static/js/modules/tabs/recommendation.js'),
     subscription: withTabModuleImportQuery('/static/js/modules/tabs/subscription.js'),

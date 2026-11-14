@@ -1076,6 +1076,9 @@
                 return;
             }
             await syncLocationHashWithTab(currentTab, { replace: true });
+            if (typeof ensureTabData === 'function') {
+                await ensureTabData(currentTab);
+            }
         });
         initPromise.finally(() => {
             moduleVisitState.settings = true;

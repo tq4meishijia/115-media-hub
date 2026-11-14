@@ -621,14 +621,14 @@
             let tone = 'warn';
             if (!configuredAny) {
                 const labels = enabledMeta.length ? enabledMeta.map(p => p.label).join('、') : '115 或 Quark';
-                message = `尚未配置可用网盘认证信息。请在”参数配置”填写 ${labels} 认证信息，保存后可点击健康检查。`;
+                message = `尚未配置可用网盘认证信息。请在”设置”填写 ${labels} 认证信息，保存后可点击健康检查。`;
             } else if (riskyProviders.length) {
                 const hasInvalid = riskyProviders.some((item) => item.entry.state === 'invalid');
                 tone = hasInvalid ? 'error' : 'warn';
                 const detailText = riskyProviders
                     .map((item) => `${item.label}：${item.entry.message}`)
                     .join('；');
-                message = `检测到网盘认证状态异常（${detailText}）。可继续执行，但建议在“参数配置”更新后重新检测。`;
+                message = `检测到网盘认证状态异常（${detailText}）。可继续执行，但建议在“设置”更新后重新检测。`;
             }
 
             hintEl.classList.toggle('hidden', !message);
@@ -2598,7 +2598,7 @@
                 const hasAnyEnabledSection = (resourceState.channel_sections || []).some(section => section?.enabled !== false);
                 const emptyText = hasAnyEnabledSection && normalizeResourceProviderFilter(resourceProviderFilter || resourceState.provider_filter) !== 'all'
                     ? `当前类型（${getResourceProviderFilterLabel(resourceProviderFilter || resourceState.provider_filter)}）暂无可展示的频道资源。`
-                    : '还没有可展示的频道资源。先在“参数配置”里添加频道，并执行一次同步即可。';
+                    : '还没有可展示的频道资源。先在“设置”里添加频道，并执行一次同步即可。';
                 const emptyChannelHtml = `<div class="rounded-2xl border border-dashed border-slate-700 p-8 text-center text-slate-400 text-sm">${escapeHtml(emptyText)}</div>`;
                 setResourceBoardHtml(container, `${isPansouIdle ? buildPansouIdleState() : ''}${isPansouIdle ? '<div class="h-3"></div>' : ''}${emptyChannelHtml}`);
                 renderResourceBoardHint();

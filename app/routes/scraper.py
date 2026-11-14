@@ -21,6 +21,7 @@ from ..services.scraper import (
     identify_scraper_batch_items,
     identify_scraper_media,
     list_scraper_entries,
+    list_scraper_entries_by_path,
     move_scraper_entries,
     rename_scraper_entry,
     save_scraper_batch_preferences,
@@ -56,6 +57,28 @@ async def get_scraper_entries_endpoint(provider: str, request: Request) -> Dict[
     limit = max(20, min(parse_int(request.query_params.get("limit", 0), default=0), 1000))
     try:
         return await asyncio.to_thread(list_scraper_entries, provider, cid, force_refresh, keyword, offset, limit)
+    except Exception as exc:
+        return _error_response(exc)
+
+
+@router.get("/scraper/{provider}/entries-by-path")
+async def get_scraper_entries_by_path_endpoint(provider: str, request: Request) -> Dict[str, Any]:
+    """按目录路径列条目（批量工具用）。空路径 = 根目录。"""
+    path = str(request.query_params.get("path", "") or "").strip()
+    force_refresh = request.query_params.get("force_refresh") == "1"
+    keyword = str(request.query_params.get("q", "") or "").strip()
+    offset = max(0, parse_int(request.query_params.get("offset", 0), default=0))
+    limit = max(20, min(parse_int(request.query_params.get("limit", 0), default=0), 1000))
+    try:
+        return await asyncio.to_thread(
+            list_scraper_entries_by_path,
+            provider,
+            path,
+            force_refresh,
+            keyword,
+            offset,
+            limit,
+        )
     except Exception as exc:
         return _error_response(exc)
 

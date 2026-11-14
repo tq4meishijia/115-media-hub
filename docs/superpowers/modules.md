@@ -187,13 +187,17 @@
 
 | 文件 | 对应界面 |
 | --- | --- |
-| `templates/partials/pages/resource.html` | 资源中心 |
-| `templates/partials/pages/recommendation.html` | 资源推荐 |
-| `templates/partials/pages/subscription.html` | 影视订阅 |
-| `templates/partials/pages/scraper.html` | 文件管理（含「扫描监控」按钮） |
-| `templates/partials/pages/monitor_about.html` | 文件夹监控 + 关于 |
-| `templates/partials/pages/task.html` | 目录树同步 |
-| `templates/partials/pages/settings.html` | 参数配置 |
+| `templates/partials/pages/overview.html` | 总览（追更 / 转存 / 账号状态聚合） |
+| `templates/partials/pages/calendar.html` | 追剧日历（按周展示追更排期） |
+| `templates/partials/pages/tools.html` | 批量工具（工具聚合 + 广告清理 / 链接库面板） |
+| `templates/partials/pages/accounts.html` | 账号管理（Cookie 健康、115 扫码、签到） |
+| `templates/partials/pages/resource.html` | 资源搜索 |
+| `templates/partials/pages/recommendation.html` | 发现页 |
+| `templates/partials/pages/subscription.html` | 自动追更 |
+| `templates/partials/pages/scraper.html` | 文件浏览（含「扫描监控」按钮） |
+| `templates/partials/pages/monitor_about.html` | 链接监控 + 关于 |
+| `templates/partials/pages/task.html` | 目录树生成 |
+| `templates/partials/pages/settings.html` | 设置 |
 
 页面外壳（导航、主题）在 `templates/index.html`，登录页在 `templates/login.html`。
 

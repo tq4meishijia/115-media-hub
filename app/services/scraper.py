@@ -993,6 +993,40 @@ def list_scraper_entries(
     }
 
 
+def list_scraper_entries_by_path(
+    provider: str,
+    path: str = "",
+    force_refresh: bool = False,
+    search: str = "",
+    offset: int = 0,
+    limit: int = 0,
+) -> Dict[str, Any]:
+    """按人类可读目录路径列出条目，供批量工具（广告清理等）使用。
+
+    目前仅 115 支持路径解析；解析失败会抛出带路径信息的 RuntimeError，
+    由上层路由转成 400 响应。空路径等价于根目录。
+    """
+    normalized = normalize_scraper_provider(provider)
+    if normalized != "115":
+        raise RuntimeError(f"按路径列目录当前仅支持 115，{normalized} 请改用 cid 参数")
+    cfg = get_config()
+    cookie = str(cfg.get("cookie_115", "") or "").strip()
+    if not cookie:
+        raise RuntimeError("115 Cookie 未配置")
+    relative_path = normalize_relative_path(str(path or "").strip())
+    target_cid = resolve_115_folder_id_by_path(cookie, relative_path)
+    payload = list_scraper_entries(
+        normalized,
+        target_cid,
+        force_refresh=force_refresh,
+        search=search,
+        offset=offset,
+        limit=limit,
+    )
+    payload["path"] = relative_path
+    return payload
+
+
 def resolve_scraper_path_entry(provider: str, path: str) -> Dict[str, Any]:
     """把人类可读路径解析成 115 的刮削条目（id/parent_id/name/is_dir/path）。
 

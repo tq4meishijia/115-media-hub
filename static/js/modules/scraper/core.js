@@ -1098,7 +1098,7 @@ function renderEntries() {
         return;
     }
     if (!isProviderConfigured()) {
-        list.innerHTML = `<div class="scraper-empty-row">请先到参数配置填写 ${escapeHtml(getProviderLabel())} 认证信息。</div>`;
+        list.innerHTML = `<div class="scraper-empty-row">请先到设置填写 ${escapeHtml(getProviderLabel())} 认证信息。</div>`;
         return;
     }
     if (state.entryError) {

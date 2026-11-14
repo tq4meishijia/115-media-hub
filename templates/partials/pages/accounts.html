@@ -1,0 +1,63 @@
+        <div id="page-accounts" class="page-panel module-page hidden">
+            <div class="sp-page-head">
+                <div>
+                    <h1 class="sp-page-title">账号管理</h1>
+                    <div class="sp-page-desc">查看各网盘账号的 Cookie 健康度、启用状态与签到情况。115 支持扫码登录，其他平台在「设置」里按对应方式接入。</div>
+                </div>
+                <div class="sp-page-actions">
+                    <button type="button" class="sp-btn sp-btn-primary" onclick="spAccountOpenQr()">115 扫码登录</button>
+                    <button type="button" class="sp-btn" id="sp-account-check-all" onclick="spAccountCheckAll()">全部检测</button>
+                    <button type="button" class="sp-btn sp-btn-ghost" onclick="spAccountsRefresh()">刷新</button>
+                </div>
+            </div>
+
+            <div id="sp-account-stats" class="sp-stats">
+                <div class="sp-stat"><span class="sp-stat-label">平台</span><span class="sp-stat-value" data-account-stat="total">--</span></div>
+                <div class="sp-stat"><span class="sp-stat-label">已配置</span><span class="sp-stat-value is-running" data-account-stat="configured">--</span></div>
+                <div class="sp-stat"><span class="sp-stat-label">已启用</span><span class="sp-stat-value" data-account-stat="enabled">--</span></div>
+                <div class="sp-stat"><span class="sp-stat-label">异常</span><span class="sp-stat-value is-paused" data-account-stat="error">--</span></div>
+            </div>
+
+            <div id="sp-accounts-grid" class="sp-account-grid">
+                <div class="sp-skeleton" style="height:150px;"></div>
+                <div class="sp-skeleton" style="height:150px;"></div>
+                <div class="sp-skeleton" style="height:150px;"></div>
+            </div>
+
+            <section class="sp-card" style="margin-top:14px;">
+                <div class="sp-card-head">
+                    <div>
+                        <h2 class="sp-card-title">115 签到</h2>
+                        <div class="sp-card-sub">读取今日签到状态与叶子余额；签到任务可在「设置 → 115」里配置。</div>
+                    </div>
+                    <div class="sp-page-actions">
+                        <button type="button" class="sp-btn sp-btn-sm" onclick="spAccountSignStatus()">刷新状态</button>
+                        <button type="button" class="sp-btn sp-btn-sm sp-btn-primary" onclick="spAccountSignNow()">立即签到</button>
+                    </div>
+                </div>
+                <div id="sp-account-sign" class="sp-muted" style="font-size:12px;">正在读取签到状态…</div>
+            </section>
+        </div>
+
+        <div id="sp-qr-modal" class="hidden fixed inset-0 bg-black/65 z-[70] p-4">
+            <div class="sp-card" style="max-width:440px;margin:8vh auto 0;">
+                <div class="sp-card-head">
+                    <div>
+                        <h2 class="sp-card-title">115 扫码登录</h2>
+                        <div class="sp-card-sub">用 115 App 扫描二维码，登录成功后会自动保存 Cookie。</div>
+                    </div>
+                    <button type="button" class="sp-btn sp-btn-sm sp-btn-ghost" onclick="spAccountCloseQr()">关闭</button>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+                    <label class="sp-field" style="width:100%;">
+                        <span class="sp-label">扫码客户端</span>
+                        <select id="sp-qr-app" class="sp-select"></select>
+                    </label>
+                    <div id="sp-qr-box" style="width:200px;height:200px;border-radius:12px;border:1px dashed var(--sp-line-strong);display:flex;align-items:center;justify-content:center;background:#fff;overflow:hidden;">
+                        <span class="sp-muted" style="font-size:12px;color:#64748b;">点击下方按钮获取二维码</span>
+                    </div>
+                    <div id="sp-qr-status" class="sp-muted" style="font-size:12px;text-align:center;min-height:18px;">未开始</div>
+                    <button type="button" id="sp-qr-start-btn" class="sp-btn sp-btn-primary" style="width:100%;" onclick="spAccountStartQr()">获取二维码</button>
+                </div>
+            </div>
+        </div>

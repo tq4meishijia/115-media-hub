@@ -1,0 +1,120 @@
+        <div id="page-overview" class="page-panel module-page">
+            <div class="sp-page-head">
+                <div>
+                    <h1 class="sp-page-title">总览</h1>
+                    <div class="sp-page-desc">追更任务、转存队列与网盘账号状态一屏掌握。数据来自本机服务，每 30 秒刷新一次。</div>
+                </div>
+                <div class="sp-page-actions">
+                    <button type="button" class="sp-btn sp-btn-primary" onclick="openNewSubscriptionTask()">+ 新建追更任务</button>
+                    <button type="button" class="sp-btn" onclick="switchTab('resource')">搜索资源</button>
+                    <button type="button" class="sp-btn sp-btn-ghost" onclick="spOverviewRefresh()">刷新</button>
+                </div>
+            </div>
+
+            <div id="sp-overview-stats" class="sp-stats" aria-label="任务概览">
+                <div class="sp-stat"><span class="sp-stat-label">追更任务</span><span class="sp-stat-value" data-stat="tasks">--</span></div>
+                <div class="sp-stat"><span class="sp-stat-label">运行中</span><span class="sp-stat-value is-running" data-stat="running">--</span></div>
+                <div class="sp-stat"><span class="sp-stat-label">已暂停</span><span class="sp-stat-value is-paused" data-stat="paused">--</span></div>
+                <div class="sp-stat"><span class="sp-stat-label">子链接</span><span class="sp-stat-value is-link" data-stat="links">--</span></div>
+                <div class="sp-stat"><span class="sp-stat-label">转存队列</span><span class="sp-stat-value" data-stat="jobs">--</span></div>
+                <div class="sp-stat"><span class="sp-stat-label">跨盘任务</span><span class="sp-stat-value" data-stat="cross">--</span></div>
+            </div>
+
+            <div class="sp-overview-grid">
+                <div class="sp-stack">
+                    <section class="sp-card" data-sp-section="running">
+                        <div class="sp-card-head">
+                            <div>
+                                <h2 class="sp-card-title">追更任务</h2>
+                                <div class="sp-card-sub">按运行状态排序，最多展示 6 个；完整列表在「自动追更」。</div>
+                            </div>
+                            <button type="button" class="sp-btn sp-btn-sm sp-btn-ghost" onclick="switchTab('subscription')">查看全部</button>
+                        </div>
+                        <div id="sp-overview-running" class="sp-task-grid">
+                            <div class="sp-skeleton"></div>
+                            <div class="sp-skeleton"></div>
+                        </div>
+                    </section>
+
+                    <section class="sp-card" data-sp-section="activity">
+                        <div class="sp-card-head">
+                            <div>
+                                <h2 class="sp-card-title">最近动态</h2>
+                                <div class="sp-card-sub">来自订阅日志的最新记录。</div>
+                            </div>
+                            <button type="button" class="sp-btn sp-btn-sm sp-btn-ghost" onclick="switchTab('subscription')">查看日志</button>
+                        </div>
+                        <div id="sp-overview-activity" class="sp-activity">
+                            <div class="sp-empty"><span>正在读取日志…</span></div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="sp-stack">
+                    <section class="sp-card" data-sp-section="quick">
+                        <div class="sp-card-head">
+                            <div>
+                                <h2 class="sp-card-title">快捷操作</h2>
+                                <div class="sp-card-sub">高频入口，避免在多级菜单里找。</div>
+                            </div>
+                        </div>
+                        <div class="sp-quick-grid">
+                            <button type="button" class="sp-quick" onclick="openNewSubscriptionTask()">
+                                <span class="sp-quick-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+                                <span>
+                                    <span class="sp-quick-title">新建追更</span>
+                                    <span class="sp-quick-sub">粘贴分享链接即可托管</span>
+                                </span>
+                            </button>
+                            <button type="button" class="sp-quick" onclick="switchTab('resource')">
+                                <span class="sp-quick-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="M16 16L20 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+                                <span>
+                                    <span class="sp-quick-title">资源搜索</span>
+                                    <span class="sp-quick-sub">盘搜 / 频道聚合</span>
+                                </span>
+                            </button>
+                            <button type="button" class="sp-quick" onclick="switchTab('scraper')">
+                                <span class="sp-quick-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3.5 7.5C3.5 6.672 4.172 6 5 6H9.4L11.2 8H19C19.828 8 20.5 8.672 20.5 9.5V17.5C20.5 18.328 19.828 19 19 19H5C4.172 19 3.5 18.328 3.5 17.5V7.5Z" stroke="currentColor" stroke-width="1.7"/></svg></span>
+                                <span>
+                                    <span class="sp-quick-title">浏览文件</span>
+                                    <span class="sp-quick-sub">重命名 / 移动 / 删除</span>
+                                </span>
+                            </button>
+                            <button type="button" class="sp-quick" onclick="openCrossCopyModal()">
+                                <span class="sp-quick-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 8H16M16 8L13 5M16 8L13 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 16H8M8 16L11 13M8 16L11 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                <span>
+                                    <span class="sp-quick-title">跨盘互传</span>
+                                    <span class="sp-quick-sub">115 / 夸克之间搬文件</span>
+                                </span>
+                            </button>
+                        </div>
+                    </section>
+
+                    <section class="sp-card" data-sp-section="health">
+                        <div class="sp-card-head">
+                            <div>
+                                <h2 class="sp-card-title">账号状态</h2>
+                                <div class="sp-card-sub">Cookie 健康度来自最近一次检测。</div>
+                            </div>
+                            <button type="button" class="sp-btn sp-btn-sm sp-btn-ghost" onclick="switchTab('accounts')">管理</button>
+                        </div>
+                        <div id="sp-overview-health">
+                            <div class="sp-empty"><span>正在读取账号状态…</span></div>
+                        </div>
+                    </section>
+
+                    <section class="sp-card" data-sp-section="today">
+                        <div class="sp-card-head">
+                            <div>
+                                <h2 class="sp-card-title">今日排期</h2>
+                                <div class="sp-card-sub">按任务的每周执行时间计算。</div>
+                            </div>
+                            <button type="button" class="sp-btn sp-btn-sm sp-btn-ghost" onclick="switchTab('calendar')">日历</button>
+                        </div>
+                        <div id="sp-overview-today">
+                            <div class="sp-empty"><span>正在计算排期…</span></div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>

@@ -1649,7 +1649,7 @@
                 } else if (!getSelectedSubscriptionCrossCopySources().length) {
                     hintEl.textContent = '请勾选夸克网盘作为源网盘。目前跨盘补源只支持从夸克网盘复制资源，其他网盘还没接通。';
                 } else {
-                    hintEl.textContent = '复制只读取源网盘，不会删除源文件；暂存位置和空间预检在参数配置的「存储位置」中设置。目前源网盘仅支持夸克。';
+                    hintEl.textContent = '复制只读取源网盘，不会删除源文件；暂存位置和空间预检在设置的「存储位置」中设置。目前源网盘仅支持夸克。';
                 }
             }
             void loadSubscriptionCrossCopySources().then(sources => {

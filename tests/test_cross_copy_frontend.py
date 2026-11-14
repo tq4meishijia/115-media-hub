@@ -190,7 +190,7 @@ class CrossCopyFrontendTest(unittest.TestCase):
 
     def test_file_manager_page_renamed_and_cross_paste_wired(self):
         index = INDEX_HTML.read_text(encoding="utf-8")
-        self.assertIn("文件管理", index)
+        self.assertIn("文件浏览", index)
         self.assertNotIn(">刮削管理<", index)
         core = (ROOT / "static/js/modules/scraper/core.js").read_text(encoding="utf-8")
         # 跨网盘粘贴入口

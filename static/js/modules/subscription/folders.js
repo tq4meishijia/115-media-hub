@@ -284,7 +284,7 @@
             subscriptionFolderPickerCallback = typeof pickerCallback === 'function' ? pickerCallback : null;
             const providerLabel = getResourceProviderLabel(provider);
             if (!isProviderCookieConfigured(provider)) {
-                showToast(`请先在参数配置中填写${providerLabel} Cookie`, { tone: 'warn', duration: 2800, placement: 'top-center' });
+                showToast(`请先在设置中填写${providerLabel} Cookie`, { tone: 'warn', duration: 2800, placement: 'top-center' });
                 return;
             }
             showLockedModal('subscription-folder-modal');

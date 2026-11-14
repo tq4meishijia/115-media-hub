@@ -247,7 +247,7 @@
         const monitorActionLocks = new Set();
         let versionInfo = { local: null, latest: null, has_update: false, checked_at: 0, error: '', source: '' };
         let versionBannerDismissed = false;
-        let currentTab = 'resource';
+        let currentTab = 'overview';
         let resourceStateHydrated = false;
         const moduleScrollTopState = {
             resource: 0,
@@ -282,13 +282,17 @@
             about: false
         };
         const SHELL_TAB_META = {
-            resource: { title: '资源中心' },
-            recommendation: { title: '资源推荐' },
-            subscription: { title: '影视订阅' },
-            scraper: { title: '文件管理' },
-            monitor: { title: '文件夹监控' },
-            task: { title: '目录树同步' },
-            settings: { title: '参数配置' },
+            overview: { title: '总览' },
+            subscription: { title: '自动追更' },
+            calendar: { title: '追剧日历' },
+            scraper: { title: '文件浏览' },
+            resource: { title: '资源搜索' },
+            recommendation: { title: '发现页' },
+            monitor: { title: '目录监控' },
+            tools: { title: '批量工具' },
+            task: { title: '目录树生成' },
+            accounts: { title: '账号管理' },
+            settings: { title: '设置' },
             about: { title: '关于与版本' }
         };
         const btnTexts = ["🌐 联网增量写入", "🛠 本地调试解析", "🔥 强制全量重写"];
@@ -612,9 +616,10 @@
         }
 
         function syncShellHeader(tab = currentTab) {
-            const meta = SHELL_TAB_META[tab] || SHELL_TAB_META.resource;
+            const meta = SHELL_TAB_META[tab] || SHELL_TAB_META.overview;
             const titleEl = document.getElementById('shell-current-title');
             if (titleEl) titleEl.innerText = meta.title;
+            if (typeof window.spShellSetTab === 'function') window.spShellSetTab(tab);
         }
 
         function readShellRailExpandedFromStorage() {
@@ -784,7 +789,7 @@
         }
 
         async function switchTab(tab, { syncHash = true, replaceHash = false } = {}) {
-            const nextTab = SHELL_TAB_META[tab] ? tab : 'resource';
+            const nextTab = SHELL_TAB_META[tab] ? tab : 'overview';
             const prevTab = currentTab;
             if (nextTab === prevTab) {
                 if (syncHash) await syncLocationHashWithTab(nextTab, { replace: replaceHash });
@@ -2388,7 +2393,7 @@
             </div>
             <div class="help-rich-section">
                 <div class="help-rich-title">什么时候不会生成</div>
-                <div class="help-rich-text">后缀名不在「参数配置 → 115 STRM 播放基础配置」的「扫描后缀名」列表内，或文件小于任务里的「文件大小过滤 (MB)」，会被跳过并计入运行记录的跳过数。</div>
+                <div class="help-rich-text">后缀名不在「设置 → 115 STRM 播放基础配置」的「扫描后缀名」列表内，或文件小于任务里的「文件大小过滤 (MB)」，会被跳过并计入运行记录的跳过数。</div>
                 <div class="help-rich-text">没有纳入任何监控任务、任务被停用、网盘目录读取失败时也不会生成；跳过与失败原因都会写进运行记录和 Web 日志。</div>
             </div>
         `;
@@ -4635,7 +4640,7 @@
             monitorFolderProvider = providerKey || '115';
             const providerLabel = getProviderLabel(monitorFolderProvider);
             if (!isProviderAuthConfigured(monitorFolderProvider)) {
-                showToast(`请先在参数配置中填写 ${providerLabel} 认证信息`, {
+                showToast(`请先在设置中填写 ${providerLabel} 认证信息`, {
                     tone: 'warn',
                     duration: 2800,
                     placement: 'top-center'

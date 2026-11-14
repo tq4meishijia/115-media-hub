@@ -1,0 +1,54 @@
+        <div id="page-calendar" class="page-panel module-page hidden">
+            <div class="sp-page-head">
+                <div>
+                    <h1 class="sp-page-title">追剧日历</h1>
+                    <div class="sp-page-desc">把追更任务的每周执行时间铺到日历上，一眼看清今天 / 本周有哪些任务会跑。按任务排期生成，不依赖外部剧集播出表。</div>
+                </div>
+                <div class="sp-page-actions">
+                    <button type="button" class="sp-btn sp-btn-primary" onclick="openNewSubscriptionTask()">+ 新建追更任务</button>
+                    <button type="button" class="sp-btn" onclick="spCalendarRefresh()">刷新</button>
+                </div>
+            </div>
+
+            <div class="sp-cal-toolbar">
+                <div class="sp-seg" role="group" aria-label="周切换">
+                    <button type="button" id="sp-cal-prev" onclick="spCalendarShift(-1)">上一周</button>
+                    <button type="button" id="sp-cal-today" onclick="spCalendarToday()">本周</button>
+                    <button type="button" id="sp-cal-next" onclick="spCalendarShift(1)">下一周</button>
+                </div>
+                <span id="sp-cal-week-label" class="sp-muted" style="font-size:12px;"></span>
+                <div style="flex:1 1 auto;"></div>
+                <select id="sp-cal-filter-type" class="sp-select" style="width:auto;min-width:110px;" onchange="spCalendarRender()">
+                    <option value="all">全部类型</option>
+                    <option value="tv">电视剧</option>
+                    <option value="movie">电影</option>
+                </select>
+                <select id="sp-cal-filter-status" class="sp-select" style="width:auto;min-width:110px;" onchange="spCalendarRender()">
+                    <option value="all">全部状态</option>
+                    <option value="enabled">仅启用</option>
+                    <option value="paused">仅暂停</option>
+                </select>
+            </div>
+
+            <div id="sp-cal-summary" class="sp-stats"></div>
+
+            <div id="sp-cal-grid" class="sp-cal-grid" aria-label="追更周历">
+                <div class="sp-skeleton" style="height:180px;"></div>
+                <div class="sp-skeleton" style="height:180px;"></div>
+                <div class="sp-skeleton" style="height:180px;"></div>
+                <div class="sp-skeleton" style="height:180px;"></div>
+                <div class="sp-skeleton" style="height:180px;"></div>
+                <div class="sp-skeleton" style="height:180px;"></div>
+                <div class="sp-skeleton" style="height:180px;"></div>
+            </div>
+
+            <div class="sp-card" style="margin-top:14px;">
+                <div class="sp-card-head">
+                    <div>
+                        <h2 class="sp-card-title">未排期任务</h2>
+                        <div class="sp-card-sub">没有设置每周执行时间的任务不会出现在日历里，可到「自动追更」里编辑。</div>
+                    </div>
+                </div>
+                <div id="sp-cal-unscheduled" class="sp-muted" style="font-size:12px;">—</div>
+            </div>
+        </div>
